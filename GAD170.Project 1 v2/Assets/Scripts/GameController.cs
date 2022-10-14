@@ -4,6 +4,7 @@ using System.Net;
 using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class GameController : MonoBehaviour
 {
@@ -17,9 +18,12 @@ public class GameController : MonoBehaviour
     public Transform lPlayerTransform;
     public float speed = 20.0f;
 
-    public Animator leftDeagle;
-    public Animator rightDeagle;
-    
+    //public Animator leftDeagle;
+    public GameObject rightDeagle;
+    public GameObject leftDeagle;
+
+    public AudioSource lShot;
+    public AudioSource rShot;
 
     private void Start()
     {
@@ -30,6 +34,7 @@ public class GameController : MonoBehaviour
     }
     private void Update()
     {
+        /*
         if (Input.GetKey(KeyCode.D))
         {
             lPlayerTransform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;
@@ -39,12 +44,13 @@ public class GameController : MonoBehaviour
         {
             lPlayerTransform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
         }
-
+        */
 
         if (Input.GetKeyDown(KeyCode.RightShift))
         {
             Debug.Log("Right Player shoots");
-
+            rShot.Play();
+            rightDeagle.GetComponent<Animator>().Play("RDeagle_Shoots");
             if (Random.Range(0, 100 + 1) <= 25)
             {
                 Debug.Log("Right Player MISS!!!");
@@ -62,7 +68,8 @@ public class GameController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftShift))
         {
             Debug.Log("Left Player shoots");
-            leftDeagle.Play("LeftDeagle_Shoot");
+            lShot.Play();
+            leftDeagle.GetComponent<Animator>().Play("LDeagle_Shoots");
             if (Random.Range(0, 100 + 1) <= 25)
             {
                 Debug.Log("Left Player MISS!!!");
@@ -81,6 +88,7 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Right player is dead!");
             Destroy(rPlayer);
+            Destroy(rightDeagle);
             lPWon.SetActive(true);
             Destroy(this);
             
@@ -90,6 +98,7 @@ public class GameController : MonoBehaviour
         {
             Debug.Log("Left player is dead!");
             Destroy(lPlayer);
+            Destroy(leftDeagle);
             rPWon.SetActive(true);
             Destroy(this);
             
