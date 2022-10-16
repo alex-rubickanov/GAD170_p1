@@ -5,6 +5,7 @@ using System.Security.Cryptography;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.SceneManagement;
 
 public class GameController : MonoBehaviour
 {
@@ -103,5 +104,20 @@ public class GameController : MonoBehaviour
             Destroy(this);
             
         }
+        /*if (Input.GetKeyDown(KeyCode.Space))
+        {
+             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("-----------------------");
+        Debug.Log("RESTART");
+        Debug.Log("-----------------------");
+        } */
     }
+
+   /* public void Restart()
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        Debug.Log("-----------------------");
+        Debug.Log("RESTART");
+        Debug.Log("-----------------------");
+    } */
 }
