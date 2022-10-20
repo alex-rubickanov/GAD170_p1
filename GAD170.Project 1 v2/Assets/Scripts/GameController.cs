@@ -26,19 +26,25 @@ public class GameController : MonoBehaviour
     public AudioSource lShot;
     public AudioSource rShot;
 
+   public GameObject backMusic;
+
     private void Start()
     {
         Debug.Log("Players are connected");
-        
-        
-        
+
+       /* if (backMusic.Find("Music") != null)
+        {
+
+        } */
+
+
     }
     private void Update()
     {
         /*
         if (Input.GetKey(KeyCode.D))
         {
-            lPlayerTransform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime;
+            lPlayerTransform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime; 
         }
 
         if (Input.GetKey(KeyCode.A))
@@ -104,6 +110,11 @@ public class GameController : MonoBehaviour
             Destroy(this);
             
         }
+
+        
+
+
+
         /*if (Input.GetKeyDown(KeyCode.Space))
         {
              SceneManager.LoadScene(SceneManager.GetActiveScene().name);
