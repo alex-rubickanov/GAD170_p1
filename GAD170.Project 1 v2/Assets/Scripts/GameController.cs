@@ -12,35 +12,31 @@ public class GameController : MonoBehaviour
 {
     public int lHealth = 100;
     public int rHealth = 100;
+
     public GameObject rPlayer;
     public GameObject lPlayer;
+
     public GameObject rPWon;
     public GameObject lPWon;
-    private int randomGen;
-    public Transform lPlayerTransform;
-    public float speed = 20.0f;
 
-    
+    private int randomGen;
+
     public GameObject rightDeagle;
     public GameObject leftDeagle;
 
     public AudioSource lShot;
     public AudioSource rShot;
 
-    public GameObject score;
-
-
-
     private void Start()
     {
         Debug.Log("Players are connected");
-        score.GetComponent<Score>().enabled = true;
+        
 
 
     }
     private void Update()
     {
-        if (rPlayer != null)
+        if (rPlayer != null) //checking that player exist
         {
             if (Input.GetKeyDown(KeyCode.RightShift)) //make right player shoot using Left Shift
             {
@@ -62,7 +58,7 @@ public class GameController : MonoBehaviour
             }
         }
 
-        if (lPlayer != null)
+        if (lPlayer != null) //checking that player exist
         {
             if (Input.GetKeyDown(KeyCode.LeftShift))    //make left player shoot using Left Shift
             {
