@@ -6,6 +6,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class GameController : MonoBehaviour
 {
@@ -19,116 +20,97 @@ public class GameController : MonoBehaviour
     public Transform lPlayerTransform;
     public float speed = 20.0f;
 
-    //public Animator leftDeagle;
+    
     public GameObject rightDeagle;
     public GameObject leftDeagle;
 
     public AudioSource lShot;
     public AudioSource rShot;
 
-   public GameObject backMusic;
+    public GameObject score;
+
+
 
     private void Start()
     {
         Debug.Log("Players are connected");
-
-       /* if (backMusic.Find("Music") != null)
-        {
-
-        } */
+        score.GetComponent<Score>().enabled = true;
 
 
     }
     private void Update()
     {
-        /*
-        if (Input.GetKey(KeyCode.D))
+        if (rPlayer != null)
         {
-            lPlayerTransform.position += new Vector3(1, 0, 0) * speed * Time.deltaTime; 
-        }
-
-        if (Input.GetKey(KeyCode.A))
-        {
-            lPlayerTransform.position += new Vector3(-1, 0, 0) * speed * Time.deltaTime;
-        }
-        */
-
-        if (Input.GetKeyDown(KeyCode.RightShift))
-        {
-            Debug.Log("Right Player shoots");
-            rShot.Play();
-            rightDeagle.GetComponent<Animator>().Play("RDeagle_Shoots");
-            if (Random.Range(0, 100 + 1) <= 25)
+            if (Input.GetKeyDown(KeyCode.RightShift)) //make right player shoot using Left Shift
             {
-                Debug.Log("Right Player MISS!!!");
-                Debug.Log("--------------------------------");
+                Debug.Log("Right Player shoots");
+                rShot.Play();   //play sound of shot
+                rightDeagle.GetComponent<Animator>().Play("RDeagle_Shoots"); //play animate of gun
+                if (Random.Range(0, 100 + 1) <= 25)
+                {
+                    Debug.Log("Right Player MISS!!!");      //25% chance to miss
+                    Debug.Log("--------------------------------");
+                }
+                else
+                {
+                    lHealth = lHealth - 20;
+                    Debug.Log("Health of Left Player is " + lHealth); //if player hid - we take
+                    Debug.Log("--------------------------------");
+                }
+
             }
-            else
+        }
+
+        if (lPlayer != null)
+        {
+            if (Input.GetKeyDown(KeyCode.LeftShift))    //make left player shoot using Left Shift
             {
-                lHealth = lHealth - 20;
-                Debug.Log("Health of Left Player is " + lHealth);
-                Debug.Log("--------------------------------");
+                Debug.Log("Left Player shoots");
+                lShot.Play();   //play sound of shot
+                leftDeagle.GetComponent<Animator>().Play("LDeagle_Shoots"); //play animate of gun
+                if (Random.Range(0, 100 + 1) <= 25)
+                {
+                    Debug.Log("Left Player MISS!!!");
+                    Debug.Log("--------------------------------"); //25% chance to miss
+                }
+                else
+                {
+                    rHealth = rHealth - 20;
+                    Debug.Log("Health of Right Player is " + rHealth);  //took hp if player got hit
+                    Debug.Log("--------------------------------");
+                }
+
             }
-
         }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift))
+        if ((rPlayer != null) && (lPlayer != null))
         {
-            Debug.Log("Left Player shoots");
-            lShot.Play();
-            leftDeagle.GetComponent<Animator>().Play("LDeagle_Shoots");
-            if (Random.Range(0, 100 + 1) <= 25)
+
+            if (rHealth == 0)
             {
-                Debug.Log("Left Player MISS!!!");
-                Debug.Log("--------------------------------");
+                Debug.Log("Right player is dead!"); //if right player dies we destroy his model, model of gun, show an UI element that gives players know who win and destroy code to stop the game
+
+
+                {
+                    Destroy(rPlayer);
+                    Destroy(rightDeagle);
+                    lPWon.SetActive(true);
+                    Destroy(this);
+                }
             }
-            else
+        }
+        if ((rPlayer != null) && (lPlayer != null))
+        {
+            if (lHealth == 0)
             {
-                rHealth = rHealth - 20;
-                Debug.Log("Health of Right Player is " + rHealth);
-                Debug.Log("--------------------------------");
+                Debug.Log("Left player is dead!"); //if right player dies we destroy his model, model of gun, show an UI element that gives players know who win and destroy code to stop the game
+
+                Destroy(lPlayer);
+                Destroy(leftDeagle);
+                rPWon.SetActive(true);
+                Destroy(this);
+
             }
-
         }
-
-        if (rHealth == 0)
-        {
-            Debug.Log("Right player is dead!");
-            Destroy(rPlayer);
-            Destroy(rightDeagle);
-            lPWon.SetActive(true);
-            Destroy(this);
-            
-        }
-
-        if (lHealth == 0)
-        {
-            Debug.Log("Left player is dead!");
-            Destroy(lPlayer);
-            Destroy(leftDeagle);
-            rPWon.SetActive(true);
-            Destroy(this);
-            
-        }
-
-        
-
-
-
-        /*if (Input.GetKeyDown(KeyCode.Space))
-        {
-             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Debug.Log("-----------------------");
-        Debug.Log("RESTART");
-        Debug.Log("-----------------------");
-        } */
     }
-
-   /* public void Restart()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-        Debug.Log("-----------------------");
-        Debug.Log("RESTART");
-        Debug.Log("-----------------------");
-    } */
 }

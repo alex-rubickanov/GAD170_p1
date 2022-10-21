@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class DontDestroy : MonoBehaviour
 {
-    public GameObject backMusic;
+    
+    public GameObject score;
 
     private void Awake()
     {
-        GameObject[] backMusic = GameObject.FindGameObjectsWithTag("Music");
-        if (backMusic.Length > 1)
+        GameObject[] score = GameObject.FindGameObjectsWithTag("Score"); //this code help us to not restart the music after LoadScene
+        if (score.Length > 1) //avoid duplicating Music Object
         {
             Destroy(this.gameObject);
         }

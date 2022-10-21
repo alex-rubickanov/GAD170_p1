@@ -12,7 +12,7 @@ public class Restart : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name); //load scene again if we press SPACE
             Debug.Log("-----------------------");
             Debug.Log("RESTART");
             Debug.Log("-----------------------");
